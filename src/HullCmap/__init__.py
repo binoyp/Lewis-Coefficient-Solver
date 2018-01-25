@@ -10,6 +10,6 @@ from .base import *
 
 from ._classes import HullSection
 
-from ._lewisfactors import LewisFactors
+from ._lewisfactors import LewisSections
 
 DEBUG = 1
