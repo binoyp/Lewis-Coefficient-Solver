@@ -31,7 +31,7 @@ class LewisSections(object):
 
             return None
 
-        if abs(self.xarray[0]) < 1e-6:  # micro meter tolerance
+        if abs(self.xarray[0]) < 1e-6 :  # micro meter tolerance
             print("half section ordinates detected")
             self.xarray[0] = 0.0
 
@@ -56,10 +56,10 @@ class LewisSections(object):
 
     def GetLewisCoeffs(self, choosepos=True):
 
-        H0 = (0.5 * self.Bs) / self.Ds
-        sigma_s = self.As / (self.Bs * self.Ds)
-        v0 = (4 * sigma_s) / np.pi
-        c1 = 3 + v0 + ((1 - v0) * ((H0 - 1) / (H0 + 1))**2)
+        self.h0 = (0.5 * self.Bs) / self.Ds
+        self.sigma_s = self.As / (self.Bs * self.Ds)
+        v0 = (4 * self.sigma_s) / np.pi
+        c1 = 3 + v0 + ((1 - v0) * ((self.h0 - 1) / (self.h0 + 1))**2)
         c2 = (2 * c1) - 6
         c3 = c1 - 4
 
@@ -69,7 +69,7 @@ class LewisSections(object):
             self.a3 = self.a3_0
         else:
             self.a3 = self.a3_1
-        self.a1 = ((H0 - 1) / (H0 + 1)) * (self.a3 + 1)
+        self.a1 = ((self.h0 - 1) / (self.h0 + 1)) * (self.a3 + 1)
 
         return (self.a1, self.a3)
 
@@ -77,7 +77,7 @@ class LewisSections(object):
         if _MPL:
             self.GetLewisCoeffs()
 
-            theta = np.linspace(0.5 * np.pi,np.pi, 31)
+            theta = np.linspace(np.pi, 0.5 * np.pi, 31)
             ms = (0.5 * self.Bs) / (1 + self.a1 + self.a3)
 
             x = ms * ((1 + self.a1) * np.sin(theta) -
@@ -86,7 +86,8 @@ class LewisSections(object):
             y = ms * ((1 - self.a1) * np.cos(theta) +
                       (self.a3 * np.cos(3 * theta)))
             print(x)
-            plt.plot(x, y,'r-+')
+            plt.plot(x, y, 'r-+')
             plt.grid(1)
+            plt.title(r"$\sigma_s$=%0.3f / $H_0$=%0.4f / $a_1$=%0.5f/$a_3$=%0.5f"%(self.sigma_s, self.h0, self.a1, self.a3))
             plt.plot(self.xarray, self.yarray)
             plt.show()
