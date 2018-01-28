@@ -31,9 +31,9 @@ class LewisSections(object):
 
             return None
 
-        if abs(self.xarray[0]) < 1e-6 :  # micro meter tolerance
+        if abs(self.xarray[0]) < 1e-6:  # micro meter tolerance
             print("half section ordinates detected")
-            self.xarray[0] = 0.0
+            #self.xarray[0] = 0.0
 
             self.Bs = 2 * np.interp(self.Ds,
                                     xp=self.yarray,
@@ -85,9 +85,10 @@ class LewisSections(object):
 
             y = ms * ((1 - self.a1) * np.cos(theta) +
                       (self.a3 * np.cos(3 * theta)))
-            print(x)
+
             plt.plot(x, y, 'r-+')
             plt.grid(1)
-            plt.title(r"$\sigma_s$=%0.3f / $H_0$=%0.4f / $a_1$=%0.5f/$a_3$=%0.5f"%(self.sigma_s, self.h0, self.a1, self.a3))
-            plt.plot(self.xarray, self.yarray)
+            plt.title(r"$\sigma_s$=%0.3f / $H_0$=%0.4f / $a_1$=%0.5f/$a_3$=%0.5f" %
+                      (self.sigma_s, self.h0, self.a1, self.a3))
+            plt.plot(self.xarray, -self.yarray)
             plt.show()
