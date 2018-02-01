@@ -6,7 +6,7 @@
 import sys
 sys.path.append("D:\\AdMarenWS\\HullCMap\\src")
 
-import HullCmap
+import LewisFactors
 import numpy as np
 import unittest
 
@@ -23,7 +23,7 @@ class IIHRTestCase(unittest.TestCase):
                        (0.249422, 0.044059),
                        (-0.377228, 0.125725)]
 
-        self.TOL = 1e-4
+        self.TOL = 1e-3
 
     def test_testframes(self):
         for path, res in zip(self.framepaths, self.coeffs):
@@ -37,7 +37,7 @@ class IIHRTestCase(unittest.TestCase):
             xp = np.multiply(r, np.cos(rad))[::-1]
             yp = np.multiply(r, np.sin(rad))[::-1]
             draft = yp[0]
-            ls = HullCmap.LewisSections(x=xp, y=yp, draft=draft)
+            ls = LewisFactors.LewisSections(x=xp, y=yp, draft=draft)
             a1, a3 = ls.GetLewisCoeffs()
             a01 = res[0]
             a03 = res[1]
